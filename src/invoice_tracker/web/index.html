@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Invoice Tracker Dashboard</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="bg-orb orb-a"></div>
+    <div class="bg-orb orb-b"></div>
+
+    <main class="shell">
+      <header class="hero card">
+        <div class="hero-copy">
+          <p class="eyebrow">Invoice Intelligence</p>
+          <h1>Invoice and Receipt Dashboard</h1>
+          <p class="hero-subtitle">
+            Search, filter, and inspect extracted invoice data directly from
+            your SQLite store.
+          </p>
+        </div>
+        <div id="spend-strip" class="spend-strip"></div>
+      </header>
+
+      <section class="card filters">
+        <form id="filter-form" autocomplete="off">
+          <label class="field field-search">
+            <span>Search</span>
+            <input
+              id="search-input"
+              type="search"
+              placeholder="Subject, sender, company, product, UID..."
+            />
+          </label>
+
+          <label class="field">
+            <span>Type</span>
+            <select id="kind-select">
+              <option value="all">All records</option>
+              <option value="invoice">Invoices</option>
+              <option value="receipt">Receipts</option>
+              <option value="both">Invoice + Receipt</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Currency</span>
+            <select id="currency-select">
+              <option value="">All currencies</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Company</span>
+            <select id="company-select">
+              <option value="">All companies</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Sort</span>
+            <select id="sort-select">
+              <option value="newest">Newest first</option>
+              <option value="oldest">Oldest first</option>
+              <option value="amount_desc">Amount high to low</option>
+              <option value="amount_asc">Amount low to high</option>
+              <option value="confidence_desc">Confidence high to low</option>
+            </select>
+          </label>
+
+          <button id="reset-filters" type="button" class="btn-secondary">
+            Reset
+          </button>
+        </form>
+        <p id="status-banner" class="status-banner" hidden></p>
+      </section>
+
+      <section class="overview">
+        <article class="card">
+          <h2>Snapshot</h2>
+          <div id="summary-cards" class="summary-cards"></div>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <h2>Monthly Spend Trend</h2>
+            <span id="trend-caption"></span>
+          </div>
+          <canvas id="trend-chart" height="230"></canvas>
+        </article>
+
+        <article class="card">
+          <h2>Top Companies</h2>
+          <ul id="company-list" class="company-list"></ul>
+        </article>
+      </section>
+
+      <section class="data-layout">
+        <article class="card table-card">
+          <div class="card-head">
+            <h2>Records</h2>
+            <span id="result-count"></span>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>UID</th>
+                  <th>Message</th>
+                  <th>Type</th>
+                  <th>Company</th>
+                  <th>Amount</th>
+                  <th>Date</th>
+                  <th>Confidence</th>
+                </tr>
+              </thead>
+              <tbody id="records-body"></tbody>
+            </table>
+          </div>
+
+          <div class="pager">
+            <button id="prev-page" type="button" class="btn-secondary">
+              Previous
+            </button>
+            <span id="page-label"></span>
+            <button id="next-page" type="button" class="btn-secondary">
+              Next
+            </button>
+          </div>
+        </article>
+
+        <aside class="card detail-card">
+          <div class="card-head">
+            <h2>Record Detail</h2>
+            <a
+              id="raw-email-link"
+              class="btn-link"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              hidden
+              >Raw email</a
+            >
+          </div>
+
+          <div id="detail-empty" class="detail-empty">
+            Select a row to inspect the extracted fields, files, and links.
+          </div>
+
+          <div id="detail-content" hidden>
+            <h3 id="detail-title"></h3>
+            <div id="detail-badges" class="badge-row"></div>
+            <dl id="detail-grid" class="detail-grid"></dl>
+
+            <section class="detail-section">
+              <h4>Documents</h4>
+              <ul id="detail-documents" class="list-links"></ul>
+            </section>
+
+            <section class="detail-section">
+              <h4>Links</h4>
+              <ul id="detail-links" class="list-links"></ul>
+            </section>
+
+            <section class="detail-section">
+              <h4>Raw Extraction JSON</h4>
+              <pre id="detail-json"></pre>
+            </section>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>

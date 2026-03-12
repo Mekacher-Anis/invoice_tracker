@@ -1,0 +1,48 @@
+imap:
+  host: "imap.gmail.com"
+  port: 993
+  use_ssl: true
+  username: "you@example.com"
+  auth_method: "password" # "password" or "oauth2"
+  password_env: "IMAP_PASSWORD"
+  oauth:
+    access_token_env: "IMAP_ACCESS_TOKEN"
+    refresh_token_env: null
+    client_id_env: null
+    client_secret_env: null
+    token_url: null
+    scope: null
+  mailbox: "INBOX"
+  search_criteria: "ALL"
+  max_messages: 2000
+
+openai:
+  enabled: true
+  api_key_env: "OPENAI_API_KEY"
+  base_url: null
+  model: "gpt-4.1-mini"
+  temperature: 0.0
+
+storage:
+  database_path: "data/invoices.db"
+  attachments_dir: "data/attachments"
+  downloads_dir: "data/downloads"
+  raw_email_dir: "data/raw_emails"
+
+processing:
+  body_char_limit: 12000
+  pdf_char_limit: 20000
+  pdf_image_dpi: 150
+  max_pdf_pages_for_llm: 8
+  allow_link_download: true
+  download_timeout_seconds: 20
+  user_agent: "invoice-tracker/1.0"
+  parallel_workers: 4
+  max_in_flight: 8
+  resume_enabled: true
+  resume_state_path: "data/resume_state.json"
+  dashboard_keywords:
+    - "dashboard"
+    - "portal"
+    - "account"
+    - "billing"
